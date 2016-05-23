@@ -15,6 +15,8 @@
         title="{{ site.title }}"
         type="application/rss+xml"
         href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
-        
-  <script src="http://localhost:35729/livereload.js"></script>
+
+  {% if jekyll.environment == "development" %}
+    <script src="http://localhost:35729/livereload.js"></script>
+  {% endif %}
 </head>
