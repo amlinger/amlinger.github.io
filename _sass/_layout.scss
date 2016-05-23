@@ -1,15 +1,20 @@
 
+$sidebar-width: 30%;
+$color-highlight: #345345;
+
 .sidebar {
-  $color-highlight: #345345;
 
   display: block;
 
-  height: 100%;
-  width: 40%;
+  position: relative;
+  height: 100vh;
 
-  position: fixed;
-  top: 0;
-  left: 0;
+  @include responsive(tablet-landscape) {
+    width: $sidebar-width;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
 
   &__background {
     background-color: green;
@@ -35,11 +40,17 @@
     padding: $spacing-unit;}
 
     &__contact-item {
+      box-sizing: border-box;
+      height: 50px;
+      width: 20%;
+      padding: 10px;
+
       float: right;
 
-      margin: 0 0 0 10px;
-      height: 25px;
-      width: 25px;
+      @include responsive(tablet-landscape) {
+        padding: 10px;
+        width: 50px;
+      }
 
       svg path {
         opacity: 0.6;
@@ -49,14 +60,35 @@
 
   &__author {
     color: $color-highlight;
-    //text-shadow: 2px 2px 4px #232323;
     margin-top: 35%;
-    max-width: 400px;
+    text-align: center;
     padding: 0 50px;
-    .avatar {font-size: 2em;}}
+
+    .avatar {font-size: 2em;}
+    .avatar__gravatar {
+      display: block;
+      margin: 0 50%;
+      transform: translateX(-50%);
+    }
+
+
+    @include responsive(tablet-landscape) {
+      max-width: 300px;
+      text-align: right;
+
+      .avatar__gravatar {
+        display: inline-block;
+        margin: inherit;
+        transform: translateX(0);
+      }
+    }
+  }
 
   &__introduction {
-    margin-left: 71px;
+    @include responsive(tablet-landscape) {
+      margin-left: 71px;
+      text-align: left;
+    }
   }
 }
 
@@ -88,8 +120,9 @@
 }
 
 .avatar {
-  height: 50px;
   display: block;
+  min-height: 50px;
+
   &__gravatar {
     border: 3px solid #EFEFEF;
     float: left;
@@ -149,55 +182,6 @@
             margin-right: 20px;
         }
     }
-
-    @include media-query($on-palm) {
-        position: absolute;
-        top: 9px;
-        right: $spacing-unit / 2;
-        background-color: $background-color;
-        border: 1px solid $grey-color-light;
-        border-radius: 5px;
-        text-align: right;
-
-        .menu-icon {
-            display: block;
-            float: right;
-            width: 36px;
-            height: 26px;
-            line-height: 0;
-            padding-top: 10px;
-            text-align: center;
-
-            > svg {
-                width: 18px;
-                height: 15px;
-
-                path {
-                    fill: $grey-color-dark;
-                }
-            }
-        }
-
-        .trigger {
-            clear: both;
-            display: none;
-        }
-
-        &:hover .trigger {
-            display: block;
-            padding-bottom: 5px;
-        }
-
-        .page-link {
-            display: block;
-            padding: 5px 10px;
-
-            &:not(:last-child) {
-                margin-right: 0;
-            }
-            margin-left: 20px;
-        }
-    }
 }
 
 
@@ -243,36 +227,16 @@
     width:         calc(45% - (#{$spacing-unit} / 2));
 }
 
-@include media-query($on-laptop) {
-    .footer-col-1,
-    .footer-col-2 {
-        width: -webkit-calc(50% - (#{$spacing-unit} / 2));
-        width:         calc(50% - (#{$spacing-unit} / 2));
-    }
-
-    .footer-col-3 {
-        width: -webkit-calc(100% - (#{$spacing-unit} / 2));
-        width:         calc(100% - (#{$spacing-unit} / 2));
-    }
-}
-
-@include media-query($on-palm) {
-    .footer-col {
-        float: none;
-        width: -webkit-calc(100% - (#{$spacing-unit} / 2));
-        width:         calc(100% - (#{$spacing-unit} / 2));
-    }
-}
-
-
-
 /**
  * Page content
  */
 .page-content {
-  width: 60%;
+  @include responsive(tablet-landscape) {
+    width: 100% - $sidebar-width;
+    margin-left: $sidebar-width;
+  }
+
   box-sizing: border-box;
-  margin-left: 40%;
   padding: $spacing-unit;
 }
 
@@ -312,8 +276,4 @@
   font-size: 42px;
   letter-spacing: -1px;
   line-height: 1;
-
-  @include media-query($on-laptop) {
-    font-size: 36px;
-  }
 }

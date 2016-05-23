@@ -3,10 +3,12 @@
     <img class="img-fill"
          src="/{% to_gravatar email: anton.amlinger@gmail.com, size: 50 %}" />
   </span>
-  <span class="avatar__name avatar__firstname">
-    {{ site.firstname }}
-  </span>
-  <span class="avatar__name avatar__lastname">
-    {{ site.lastname }}
+  <span class="avatar__name">
+    <span class="avatar__firstname">
+      {{ site.firstname }}
+    </span>
+    <span class="avatar__lastname">
+      {{ site.lastname }}
+    </span>
   </span>
 </div>
