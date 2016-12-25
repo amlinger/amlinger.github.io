@@ -27,7 +27,10 @@ markdown: kramdown
 kramdown:
   input: GFM
 
-#
+# Travis does not like vendor gems, as they might contain date-errored files:
+# https://github.com/jekyll/jekyll/issues/2938
+exclude: [vendor]
+
 highlighter: pygments.rb
 tags:
   highlight:
