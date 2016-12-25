@@ -1,4 +1,4 @@
-# We tell Travis to run in a Ruby 2.3 environment
+# We tell Travis to run in a Ruby 2.2 environment
 #
 # The main idea behind this is to clone the existing Git repository in our
 # current working folder after a build has succeeded, and jump into the
@@ -6,7 +6,7 @@
 # and force push the result back to the master branch.
 language: ruby
 rvm:
-- 2.3
+- 2.2
 
 script:
   - bundle exec jekyll build
