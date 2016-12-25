@@ -1,19 +1,18 @@
 
 $sidebar-width: 30%;
-$color-highlight: #345345;
+$color-highlight-dark: #345345;
+$color-highlight-light: rgba(255, 255, 255, 0.7);
+
+$top-to-sidebar-text: 30%;
 
 .sidebar {
-
-  display: block;
-
-  position: relative;
   height: 100vh;
 
   @include responsive(tablet-landscape) {
     width: $sidebar-width;
-    position: fixed;
-    top: 0;
-    left: 0;
+    float: left;
+    min-width: 420px;
+    height: 100%;
   }
 
   &__background {
@@ -24,9 +23,18 @@ $color-highlight: #345345;
     z-index: -1;}
 
   &__content {
+    @include responsive(tablet-landscape) {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: $sidebar-width;
+      min-width: 420px;
+      height: 100vh;
+    }
+
     position: absolute;
     height: 100%;
-    width: 100%;
+    width: auto;
     z-index: 100;}
 
   &__contact {
@@ -54,13 +62,14 @@ $color-highlight: #345345;
 
       svg path {
         opacity: 0.6;
-        fill: $color-highlight;}
+        fill: $color-highlight-dark;
+        transition: opacity 200ms ease-in-out}
 
       &:hover svg path {opacity: 1;}}
 
   &__author {
-    color: $color-highlight;
-    margin-top: 35%;
+    color: $color-highlight-light;
+    margin-top: $top-to-sidebar-text;
     text-align: center;
     padding: 0 50px;
 
@@ -95,6 +104,12 @@ $color-highlight: #345345;
 .background {
   &--solid {
     background-color: #BAED8D;
+  }
+
+  &--gradient {
+    background: radial-gradient(circle farthest-corner at 40% 120%,
+                                #D0D59D,
+                                #0B566D (100% - $top-to-sidebar-text));
   }
 
   &--parallax {
@@ -232,8 +247,7 @@ $color-highlight: #345345;
  */
 .page-content {
   @include responsive(tablet-landscape) {
-    width: 100% - $sidebar-width;
-    margin-left: $sidebar-width;
+    overflow: auto;
   }
 
   box-sizing: border-box;
