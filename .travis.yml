@@ -1,30 +1,25 @@
-# We tell Travis to run in a Ruby 2.2 environment
-#
-# The main idea behind this is to clone the existing Git repository in our
-# current working folder after a build has succeeded, and jump into the
-# repository folder. There, we copy over the generated files, commit the result,
-# and force push the result back to the master branch.
 language: ruby
 rvm:
 - 2.2
-
 script:
-  - bundle exec jekyll build
-
-# after building, copy the site into the master branch and push back to Github
+- bundle exec jekyll build
 after_success:
-  - git clone https://$GITHUB_REPO
-  - cd $(basename ${GITHUB_REPO%.git})
-  - git config user.name "Travis CI"
-  - git config user.email ${EMAIL}
-  - rsync -az --delete --exclude '.git*' ../_site/ .
-  - touch .nojekyll
-  - git add -A .
-  - git commit -m "Generated Jekyll site by Travis CI - ${TRAVIS_BUILD_NUMBER}"
-  - git push --force "https://${DEPLOY_KEY}@${GITHUB_REPO}" HEAD:${REPO_TARGET_BRANCH}
-
+- git clone https://$GITHUB_REPO
+- cd $(basename ${GITHUB_REPO%.git})
+- git config --global user.name "Travis CI"
+- git config --global user.email ${AUTHOR_EMAIL}
+- rsync -az --delete --exclude '.git*' ../_site/ .
+- touch .nojekyll
+- git add -A .
+- git commit -m "Generated Jekyll site by Travis CI - ${TRAVIS_BUILD_NUMBER}"
+- git push --force "https://${DEPLOY_KEY}@${GITHUB_REPO}" HEAD:${REPO_TARGET_BRANCH}
+branches:
+  only:
+  - source
 env:
   global:
   - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
   - GITHUB_REPO: github.com/amlinger/amlinger.github.io.git
   - REPO_TARGET_BRANCH: master
+  - AUTHOR_EMAIL: anton.amlinger@gmail.com
+  - secure: VGgKtYKroaxwOWtz8MzHbEKe0pflUz5i2uVgJSDcQKw9Q8bpNbe84kaksjcCqdpctabsMcYfXC+h8yL/SL+2uAHk6+IFwHvB+zrODytaZ8rpWN6LEBw8iTA+Co4FUHE9MzCGNX2zEGmnbL7mJZMeOV4m4vPGwKxvpqjdxo+KQIBuqP5jMA8mBdGZl3FhUCAGbVeTEKgS+mBD0Ob8AoGwar1G7o+OBdmF+YQnwp5oSt/9BgtfDUxVNmJHuN7EdW4YoJUgk6C25k6ux9pWr1WS6908g8/QXiOAK7TQbufhO6v0pj0LBJKEqkm33FwGm+Q/N167YG5mkJis5qbwGK8FGytv0FF4QiqeSLzczy6uLSbIIwv2qU/dpRrCj4dnQsxTg5UGD1Ny1bgcAU8MY76G0nE+kIiJcFriWHIBJGo2JA+x6E77uByd+f5qKv/vc0CIbwkcM57fL99Q3LTZoGZBrU02LWpYmBMSzGfgUtBY+AZYcDZ6Zsd70EJvEkFqQQ2Zo1sXv/ySHUH+PGI1NV/LAhs8iNPbrIsdEnS2xGbT9K1pw+R/Jw+MWsBenSDwHgY4ONdXuRk9YG7AWz/a7dgBDDrbbjy6MJodG4r7fIwqp8f6co9vJanT9QerDjo9OYRAkNc1a2lhlFTbn12q+uN5BW828fgXgXVzQAetSe9oi74=
