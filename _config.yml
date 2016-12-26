@@ -5,7 +5,7 @@
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # 'jekyll serve'. If you change this file, please restart the server process.
 
-# Site settings
+# SITE SETTINGS ===============================================================
 safe:        false
 title: Anton Amlinger
 email: antonamlinger@gmail.com
@@ -20,6 +20,7 @@ lastname: Amlinger
 github_username:  amlinger
 twitter_username: antonamlinger
 linkedin_username: anton-amlinger-8347a577
+# END OF SITE SETTINGS ========================================================
 
 # Markdown parse settings
 markdown: kramdown
@@ -27,9 +28,22 @@ markdown: kramdown
 kramdown:
   input: GFM
 
-# Travis does not like vendor gems, as they might contain date-errored files:
-# https://github.com/jekyll/jekyll/issues/2938
-exclude: [vendor]
+# Files excluded from being copied to the site folder:
+exclude:
+  # Travis does not like vendor gems, as they might contain date-errored files:
+  # https://github.com/jekyll/jekyll/issues/2938
+  - vendor
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - Guardfile
+
+# Specifies the assets build by jekyll-assets, using Sprockets. More
+# comprehensive documentation about what can be found at
+# https://github.com/jekyll/jekyll-assets/blob/master/README.md
+assets:
+  sources:
+    - _assets/css
 
 highlighter: pygments.rb
 tags:
@@ -39,8 +53,7 @@ tags:
 whitelist:
   - to_gravatar
 
+# Gems used in this
 gems:
   - jekyll-gist
-
-#gems:
-#  - liquid-md5
+  - jekyll-assets
