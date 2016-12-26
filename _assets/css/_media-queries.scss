@@ -1,17 +1,22 @@
 
 $breakpoints: (
   'phone'             : ( max-width:  767px ),
-  'tablet-portait'    : ( min-width:  767px ),
-  'tablet-landscape'  : ( min-width:  992px ),
+  'tablet'            : ( min-width:  767px ),
   'desktop'           : ( min-width: 1200px )
 );
 
-@mixin responsive($name) {
+@mixin responsive($name, $orientation:"") {
   // If the key exists in the map
   @if map-has-key($breakpoints, $name) {
     // Prints a media query based on the value
-    @media #{inspect(map-get($breakpoints, $name))} {
-      @content;
+    @if ($orientation == "") {
+      @media #{inspect(map-get($breakpoints, $name))} {
+        @content;
+      }
+    } @else {
+      @media #{inspect(map-get($breakpoints, $name))} and (orientation:$orientation) {
+        @content;
+      }
     }
   }
 

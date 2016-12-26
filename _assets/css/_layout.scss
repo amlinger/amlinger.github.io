@@ -3,16 +3,25 @@ $sidebar-width: 30%;
 $color-highlight-dark: #345345;
 $color-highlight-light: rgba(255, 255, 255, 0.7);
 
-$top-to-sidebar-text: 30%;
+$top-to-sidebar-text: 20%;
 
 .sidebar {
   height: 100vh;
+  width: 100%;
+  position: relative;
 
-  @include responsive(tablet-landscape) {
+  // Make sure that we have a sticky sidebar only on things larger than
+  // tablets (and when in landscape mode), otherwise we keep it at the top.
+  @include responsive(tablet, landscape) {
     width: $sidebar-width;
     float: left;
     min-width: 420px;
-    height: 100%;
+  }
+
+  // Set the sidebar/header to a somewhat more maneagable height when a tablet
+  // in portait mode is used.
+  @include responsive(tablet, portrait) {
+    height: 60vh;
   }
 
   &__background {
@@ -23,13 +32,12 @@ $top-to-sidebar-text: 30%;
     z-index: -1;}
 
   &__content {
-    @include responsive(tablet-landscape) {
+    @include responsive(tablet, landscape) {
       position: fixed;
       top: 0;
       left: 0;
       width: $sidebar-width;
       min-width: 420px;
-      height: 100vh;
     }
 
     position: absolute;
@@ -55,7 +63,7 @@ $top-to-sidebar-text: 30%;
 
       float: right;
 
-      @include responsive(tablet-landscape) {
+      @include responsive(tablet, landscape) {
         padding: 10px;
         width: 50px;
       }
@@ -69,7 +77,8 @@ $top-to-sidebar-text: 30%;
 
   &__author {
     color: $color-highlight-light;
-    margin-top: $top-to-sidebar-text;
+    top: $top-to-sidebar-text;
+    position: relative;
     text-align: center;
     padding: 0 50px;
 
@@ -81,7 +90,7 @@ $top-to-sidebar-text: 30%;
     }
 
 
-    @include responsive(tablet-landscape) {
+    @include responsive(tablet, landscape) {
       max-width: 300px;
       text-align: right;
 
@@ -94,7 +103,7 @@ $top-to-sidebar-text: 30%;
   }
 
   &__introduction {
-    @include responsive(tablet-landscape) {
+    @include responsive(tablet, landscape) {
       margin-left: 71px;
       text-align: left;
     }
@@ -246,7 +255,7 @@ $top-to-sidebar-text: 30%;
  * Page content
  */
 .page-content {
-  @include responsive(tablet-landscape) {
+  @include responsive(tablet, landscape) {
     overflow: auto;
   }
 
