@@ -25,6 +25,7 @@ $content-width:    800px;
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import
         "base",
+        "table",
         "layout",
         "syntax-highlighting"
 ;
