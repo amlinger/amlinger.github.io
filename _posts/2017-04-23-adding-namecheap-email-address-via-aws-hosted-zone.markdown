@@ -2,7 +2,7 @@
 layout: post
 title:  "Adding Namecheap email address via AWS hosted Zone"
 date:   2017-04-23 10:00:00 +0100
-categories: AWS, Namecheap, DevOps
+categories: DevOps
 ---
 
 I like smart email addresses. Since my last name starts with an 'a', I figured I'd register the nifty personal email address `anton@mlinger.com` to be like other cool developers. This is a write-up on how to reproduce this for other domains as well.
