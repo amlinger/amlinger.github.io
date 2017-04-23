@@ -8,7 +8,7 @@
 # SITE SETTINGS ===============================================================
 safe:        false
 title: Anton Amlinger
-email: antonamlinger@gmail.com
+email: anton@mlinger.com
 description: >
   Anton Amlinger
 baseurl: "" # the subpath of your site, e.g. /blog
