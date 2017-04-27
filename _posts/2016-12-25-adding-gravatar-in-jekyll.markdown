@@ -4,7 +4,7 @@ title:  "Adding Gravatar in Jekyll"
 date:   2016-12-25 13:28:14 +0200
 categories: jekyll
 ---
-I'm a big fan of [Gravatar](Gravatar). I like the idea of being able to keep track of my profile photos in a central location, instead of having to change them at each service, remembering where I've stored the photos locally, and so on.
+I'm a big fan of [Gravatar](https://gravatar.com/). I like the idea of being able to keep track of my profile photos in a central location, instead of having to change them at each service, remembering where I've stored the photos locally, and so on.
 
 Another advantage of the Gravatar service is the possibility to request profile images of different sizes, based on what is needed in the context. This is useful especially when you only need a thumbnail.
 
@@ -19,5 +19,3 @@ The resulting script takes an email and a size in pixels, and returns a URL to t
 {% gist amlinger/21ac760f9ce244ff7d5a75742a47bc18 %}
 
 _The demand for yet another plugin for adding Gravatar to Jekyll (there already are a few) does not seem to be very large to me, which is why this is kept in a Gist and not as an actual Gem._
-
-[Gravatar]: https://gravatar.com/

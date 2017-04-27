@@ -7,11 +7,11 @@ categories: DevOps
 
 I like smart email addresses. Since my last name starts with an 'a', I figured I'd register the nifty personal email address `anton@mlinger.com` to be like other cool developers. This is a write-up on how to reproduce this for other domains as well.
 
-[Namecheap](namecheap) is usually my goto place for domains. They got a pretty user-friendly interface as well as a nice and fast customer support. So I naturally grabbed the domain mlinger.com from there.
+[Namecheap](https://www.namecheap.com/) is usually my goto place for domains. They got a pretty user-friendly interface as well as a nice and fast customer support. So I naturally grabbed the domain mlinger.com from there.
 
 ### Setting up a Hosted Zone
 
-As I manage most of my domains through AWS, I decided to setup the domain in Route 53 as a hosted zone. This can be done by logging into your AWS account, going to `Route 53` > `Hosted Zones` > `Create Hosted Zone`, enter the domain that you own, any comment about the hosted zone, and leave the type as is to be able to access it from the public Internet. *[This TechGenix](hosted_zone) page provides a more detailed description of the way to go about this.*
+As I manage most of my domains through AWS, I decided to setup the domain in Route 53 as a hosted zone. This can be done by logging into your AWS account, going to `Route 53` > `Hosted Zones` > `Create Hosted Zone`, enter the domain that you own, any comment about the hosted zone, and leave the type as is to be able to access it from the public Internet. *[This TechGenix](http://techgenix.com/namecheap-aws-ec2-linux/) page provides a more detailed description of the way to go about this.*
 
 You'll notice that AWS already has setup Name Server records for this hosted zone (I've always had trouble remembering what all DNS record names do, so at the end I've put a table explaining the records in this post). We'll need to copy the value of these to Namecheap, to let it know that the domain should be handled by AWS name servers. The value of the `NS` record should look something like the following, but will most likely be different for each hosted zone:
 ```
@@ -33,7 +33,7 @@ The former option has been discouraged from, since that is more of an option for
 
 ### Sending emails to Namecheap Privateemail
 
-Privateemail can be set up through Namecheap for the domain in question, after which we need to make sure that email reaches the server by setting up records in the hosted zone pointing to the email server on Namecheap. According to [Namecheaps guide](records), the following records need to be set up.
+Privateemail can be set up through Namecheap for the domain in question, after which we need to make sure that email reaches the server by setting up records in the hosted zone pointing to the email server on Namecheap. According to [Namecheaps guide](https://www.namecheap.com/support/knowledgebase/article.aspx/1340/2176/namecheap-private-email-records-for-domains-with-thirdparty-dns), the following records need to be set up.
 
 | Name               | Type     | Value                                      |
 |:-------------------|:------------------------------------------------------|
@@ -51,7 +51,7 @@ Allowing up to 1 hour for the records to take effect might be needed, before mov
 
 ### Handle email from Gmail
 
-Last step is to let Gmail manage the email settings. This is thoroughly explained step by step [here](gmail-to-namecheap), but here is a quick walkthrough. In your Gmail account, and go to `Settings` > `Accounts and Import` >  `Add a mail account`. In the popup, step by step:
+Last step is to let Gmail manage the email settings. This is thoroughly explained step by step [here](https://www.namecheap.com/support/knowledgebase/article.aspx/9188/2175/google-mail-fetcher-setup-for-namecheap-private-email), but here is a quick walkthrough. In your Gmail account, and go to `Settings` > `Accounts and Import` >  `Add a mail account`. In the popup, step by step:
 1. Enter your custom email address
 2. Your Privateemail username/password, `mail.privateemail.com` for POP Server and use port 995
 3. Tick that you want to be able to send email as well
@@ -72,8 +72,3 @@ This is a brief explanation of the records that are used in this post.
 | `TXT`   | TeXT           | Arbitrary text record for human readable text          |
 | `CNAME` | Canonical NAME | An alias for another domain name                       |
 | `SRV`   | SeRVice        | Defines host/port for the specified service            |
-
-[namecheap]: https://www.namecheap.com/
-[hosted_zone]: http://techgenix.com/namecheap-aws-ec2-linux/
-[records]: https://www.namecheap.com/support/knowledgebase/article.aspx/1340/2176/namecheap-private-email-records-for-domains-with-thirdparty-dns
-[email-to-namecheap]: https://www.namecheap.com/support/knowledgebase/article.aspx/9188/2175/google-mail-fetcher-setup-for-namecheap-private-email

@@ -10,8 +10,6 @@ This is my first post in this blog, and I thought that it would be suiting to wr
 
 Jekyll is a static blog engine, that compiles your blog posts written in Markdown to static HTML, which can be served conveniently on GitHub pages.
 
-To be able to use a custom domain, instead of [amlinger.github.io](https://amlinger.github.io) as is the default on GitHub pages, adding a [CNAME](CNAME) file does the trick. The only problem is that GitHub has no way of supporting SSL certificates, leaving you without HTTPS. This might not do too much for a static blog page which source code still is open source on GitHub, but it is bad for SEO. I solved this by signing up for a CloudFare account, where they are kind enough to provide free SSL certificates, and thus solving the HTTPS problem.
+To be able to use a custom domain, instead of [amlinger.github.io](https://amlinger.github.io) as is the default on GitHub pages, adding a [CNAME](https://github.com/amlinger/amlinger.github.io/blob/master/CNAME) file does the trick. The only problem is that GitHub has no way of supporting SSL certificates, leaving you without HTTPS. This might not do too much for a static blog page which source code still is open source on GitHub, but it is bad for SEO. I solved this by signing up for a CloudFare account, where they are kind enough to provide free SSL certificates, and thus solving the HTTPS problem.
 
 This will have to do for a first post of a blog thats still under heavy development. Stay tuned for more updates!
-
-[CNAME]: https://github.com/amlinger/amlinger.github.io/blob/master/CNAME
