@@ -13,7 +13,7 @@ after_success:
 - touch .nojekyll
 - git add -A .
 - git commit -m "Generated Jekyll site by Travis CI - ${TRAVIS_BUILD_NUMBER}"
-- git push --force "https://${DEPLOY_KEY}@${GITHUB_REPO}" HEAD:${REPO_TARGET_BRANCH}
+- git push "https://${DEPLOY_KEY}@${GITHUB_REPO}" HEAD:${REPO_TARGET_BRANCH}
 branches:
   only:
   - source
@@ -24,4 +24,4 @@ env:
   - REPO_TARGET_BRANCH: master
   - AUTHOR_EMAIL: anton.amlinger@gmail.com
   - DEPLOY_KEY:
-    - secure: VGgKtYKroaxwOWtz8MzHbEKe0pflUz5i2uVgJSDcQKw9Q8bpNbe84kaksjcCqdpctabsMcYfXC+h8yL/SL+2uAHk6+IFwHvB+zrODytaZ8rpWN6LEBw8iTA+Co4FUHE9MzCGNX2zEGmnbL7mJZMeOV4m4vPGwKxvpqjdxo+KQIBuqP5jMA8mBdGZl3FhUCAGbVeTEKgS+mBD0Ob8AoGwar1G7o+OBdmF+YQnwp5oSt/9BgtfDUxVNmJHuN7EdW4YoJUgk6C25k6ux9pWr1WS6908g8/QXiOAK7TQbufhO6v0pj0LBJKEqkm33FwGm+Q/N167YG5mkJis5qbwGK8FGytv0FF4QiqeSLzczy6uLSbIIwv2qU/dpRrCj4dnQsxTg5UGD1Ny1bgcAU8MY76G0nE+kIiJcFriWHIBJGo2JA+x6E77uByd+f5qKv/vc0CIbwkcM57fL99Q3LTZoGZBrU02LWpYmBMSzGfgUtBY+AZYcDZ6Zsd70EJvEkFqQQ2Zo1sXv/ySHUH+PGI1NV/LAhs8iNPbrIsdEnS2xGbT9K1pw+R/Jw+MWsBenSDwHgY4ONdXuRk9YG7AWz/a7dgBDDrbbjy6MJodG4r7fIwqp8f6co9vJanT9QerDjo9OYRAkNc1a2lhlFTbn12q+uN5BW828fgXgXVzQAetSe9oi74=
+    - secure: Wmez7FyBr5Y5mRNN/3GbBJSOAwIlbwfDiOJ3p9KzyL9Yb3n6KlNJFwTwKpzPehCeFMPoiihuiQP2MLd/9MURVEHCtP35lYBCheLSIUmkgIJfAOFAc4vYBvUre6omAf4TjLVFH7nzdf2Rdqbc6fNhcxQsjS+lRFsVueTbiMOefn1y/nqQxJw9tZCvDWw+oAVG2zud8IcQmlYWmlNSkmnmKnwS/nc2sNXSgpNkEwoLmjpzYRJVADjIOtwxl+kxnjfNO25zozLge4v8nc2fcbzdnaBk1mjOZyXjnHh1ufBgDxRHmIicJa0U/4HPRfSo38HkGWBVPiD7hhHRfX5BwFVwVl8ubqlL0oEvLDwLs1NUTMp5/xZHXAEylIvoygZaRExSgAui2wIZdi0Q5sJsTNZKbl098grKZQcJxt7O/fx8Eu1eIzQIbVxtbU6P29+r5prJk5RWHmlf875kYqbhjklP0ytA3guMBaL+zX/o1X/jHrcrDzfKMglLIQu8vGaMlOy8/rjKyEvy3cbj7GvJz8eVjDKA78gwH2MJ8tdoWlQUomgKRehmtmqG5E12McW7Ab5yPw6MLgVwfFISBMvf/RT9Qse55q7A96zquLg4aPr/AY9r/h5/6HK9xUYGr9zjGgWvKaryH3xcdpTgH24HmmZ8NPduOSgE2sKbBwOxR53Fn/E=
