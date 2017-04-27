@@ -8,6 +8,18 @@ dl, dd, ol, ul, figure {
     padding: 0;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  color: $brand-color;
+}
+
+h3, h4, h5, h6 {
+  &:before {
+    color: #D0D59D;
+    content: '#';
+    margin-right: 0.5em;
+    font-weight: 900;
+  }
+}
 
 
 /**
@@ -135,6 +147,9 @@ blockquote {
 pre,
 code {
   font-size: 12px;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+
 }
 
 code {
@@ -149,6 +164,7 @@ pre {
         border: 0;
         padding-right: 0;
         padding-left: 0;
+        background-color: transparent;
     }
 }
 

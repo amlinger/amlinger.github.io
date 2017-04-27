@@ -1,28 +1,30 @@
 
 table {
   border: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  margin-bottom: 20px;
+  width: 100%;
+
   th {
-    color:          #D5DDE5;;
-    background:     #1b1e24;
-    border-bottom:  2px solid #9ea7af;
-    border-right:   1px solid #343a45;
+    color:          #D5DDE5;
+    background:     #0B566D;
     font-weight:    200;
     padding:        8px 10px;
     text-align:     left;
-    text-shadow:    0 1px 1px rgba(0, 0, 0, 0.1);
+    text-shadow:    0 1px 1px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     vertical-align: middle;
-  }
 
-  th:last-child {
-    border-right:none;
-  }
+    border: none;
 
+    &:last-child { border-top-right-radius: 3px; }
+    &:first-child { border-top-left-radius: 3px; }
+  }
   tr {
-    border-top: 1px solid #C1C3D1;
-    border-bottom-: 1px solid #C1C3D1;
     color:#666B85;
-    font-size:16px;
-    font-weight:normal;
     text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
   }
 
@@ -35,7 +37,7 @@ table {
   }
 
   tr:nth-child(odd) td {
-    background:#EBEBEB;
+    background: rgba(0, 0, 0, 0.05);
   }
 
   tr:last-child td:first-child {
@@ -47,10 +49,8 @@ table {
   }
 
   td {
-    background:#FFFFFF;
-    padding: 5px 10px;
+    padding: 8px 10px;
     text-align:left;
-    vertical-align:middle;
-    border-right: 1px solid #C1C3D1;
+    vertical-align: middle;
   }
 }
