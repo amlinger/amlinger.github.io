@@ -1,5 +1,6 @@
 
 $sidebar-width: 30%;
+$sidebar-min-width: 420px;
 $color-highlight-dark: #345345;
 $color-highlight-light: rgba(255, 255, 255, 0.7);
 
@@ -14,8 +15,8 @@ $top-to-sidebar-text: 20%;
   // tablets (and when in landscape mode), otherwise we keep it at the top.
   @include responsive(tablet, landscape) {
     width: $sidebar-width;
+    min-width: $sidebar-min-width;
     float: left;
-    min-width: 420px;
   }
 
   // Set the sidebar/header to a somewhat more maneagable height when a tablet
@@ -37,12 +38,12 @@ $top-to-sidebar-text: 20%;
       top: 0;
       left: 0;
       width: $sidebar-width;
-      min-width: 420px;
+      min-width: $sidebar-min-width;
     }
 
     position: absolute;
     height: 100%;
-    width: auto;
+    width: 100%;
     z-index: 100;}
 
   &__contact {
