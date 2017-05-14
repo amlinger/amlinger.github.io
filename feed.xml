@@ -1,30 +1,343 @@
----
-layout: null
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{{ site.title | xml_escape }}</title>
-    <description>{{ site.description | xml_escape }}</description>
-    <link>{{ site.url }}{{ site.baseurl }}/</link>
-    <atom:link href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" rel="self" type="application/rss+xml"/>
-    <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
-    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
-    <generator>Jekyll v{{ jekyll.version }}</generator>
-    {% for post in site.posts limit:10 %}
+    <title>Anton Amlinger</title>
+    <description>Anton Amlinger
+</description>
+    <link>https://blog.amlinger.me/</link>
+    <atom:link href="https://blog.amlinger.me/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 14 May 2017 19:33:20 +0000</pubDate>
+    <lastBuildDate>Sun, 14 May 2017 19:33:20 +0000</lastBuildDate>
+    <generator>Jekyll v3.4.3</generator>
+    
       <item>
-        <title>{{ post.title | xml_escape }}</title>
-        <description>{{ post.content | xml_escape }}</description>
-        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
-        <link>{{ post.url | prepend: site.baseurl | prepend: site.url }}</link>
-        <guid isPermaLink="true">{{ post.url | prepend: site.baseurl | prepend: site.url }}</guid>
-        {% for tag in post.tags %}
-        <category>{{ tag | xml_escape }}</category>
-        {% endfor %}
-        {% for cat in post.categories %}
-        <category>{{ cat | xml_escape }}</category>
-        {% endfor %}
+        <title>Who is Home on an Asus Router</title>
+        <description>&lt;p&gt;I like knowing whats on my local network. Sharing a house with a bunch of roommates, the idea was that knowing who and what is connected to the WiFi/Ethernet on the router could help automating this, and building cool services on top of.&lt;/p&gt;
+
+&lt;p&gt;The first approach I took was using a NodeJs server (because everything needs to be written in JavaScript these days) using &lt;a href=&quot;https://nmap.org/&quot;&gt;Nmap&lt;/a&gt; to scan the network for IP addresses, together with (ARP)[https://en.wikipedia.org/wiki/Address_Resolution_Protocol] to resolve MAC addresses from the IP’s that Nmap provided. Running this server on a RaspberryPi was pretty unreliable, finding all hostnames, as well as resolving the IP addresses was shaky at best.&lt;/p&gt;
+
+&lt;h3 id=&quot;finding-a-way-in&quot;&gt;Finding a Way In&lt;/h3&gt;
+
+&lt;p&gt;I came upon this idea back in February, and did not pursue it any further for reasons stated above, and didn’t think much about it until a few weeks ago, when I stumbled upon this article from &lt;a href=&quot;http://mycyberuniverse.com/linux/full-controling-the-asus-router-via-command-line.html&quot;&gt;My Cyber Universe&lt;/a&gt;, which describes how to gain Telnet access to your Asus Router. Given that I’m the owner of an Asus RT-N66U, I proceeded to automating the task of looking up which devices are present in the Routers, much more reliable, ARP table, and presenting that on the local network via (of course) a NodeJs server.&lt;/p&gt;
+
+&lt;h3 id=&quot;solution&quot;&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;The work the server does is minimal. On a given interval, a script on the server Telnets into the Asus router, and reads the ARP table file. This is then parsed and stored locally. For each record without a name, &lt;code&gt;nslookup&lt;/code&gt; is done to resolve the hostname via the DNS server running on the router.&lt;/p&gt;
+
+&lt;p&gt;Find the project here: https://github.com/amlinger/who-is-home&lt;/p&gt;
+
+&lt;h4 id=&quot;points-of-improvement&quot;&gt;Points of improvement&lt;/h4&gt;
+
+&lt;p&gt;The small project could benefit from a couple of small improvements, that is still upcoming:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Invalidate the local hostname cache. Even though the Hostname is unlikely to change for any of the devices on the network, restarting the server to get the new Hostname is cumbersome.&lt;/li&gt;
+  &lt;li&gt;Lock management. The current solution is a concurrency-hazard, and reading and writing to the same mapping at the same time is bound to happen at some point. This could be addressed by adding mutex locks.&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Sun, 14 May 2017 09:00:00 +0000</pubDate>
+        <link>https://blog.amlinger.me/homeautomation/2017/05/14/who-is-home-on-asus-router.html</link>
+        <guid isPermaLink="true">https://blog.amlinger.me/homeautomation/2017/05/14/who-is-home-on-asus-router.html</guid>
+        
+        
+        <category>HomeAutomation</category>
+        
       </item>
-    {% endfor %}
+    
+      <item>
+        <title>A Note on RaspberryPi WiFi setup</title>
+        <description>&lt;p&gt;I like accessing my RaspberryPi’s over SSH. This feature have been disabled for fresh installs of Raspbian, and for good reasons as well, to not provide a security breach into the Pi as many did without changing the default username and password.&lt;/p&gt;
+
+&lt;p&gt;It can also be a bit cumbersome to access your newly flashed Pi, especially if the plan is to run it headless without a keyboard/monitor attached.&lt;/p&gt;
+
+&lt;h3 id=&quot;ssh-access&quot;&gt;SSH access&lt;/h3&gt;
+
+&lt;p&gt;After burning your SD card, and reading it as a mounted unit, the boot partition is accessible and writeable. To get SSH access straight away, add a file called &lt;code&gt;ssh&lt;/code&gt; in the &lt;code&gt;boot&lt;/code&gt; partition (most likely displayed as the root of your SD card).&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.raspberrypi.org/documentation/remote-access/ssh/&quot;&gt;Official documentation&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;wifi-access&quot;&gt;WiFi Access&lt;/h3&gt;
+
+&lt;p&gt;In the same manner as with the SSH file, a &lt;code&gt;wpa_supplicant.conf&lt;/code&gt; file can be added to the &lt;code&gt;boot&lt;/code&gt; partition, which will then be copied into &lt;code&gt;/etc/wpa_supplicant/wpa_supplicant.conf&lt;/code&gt; to provide WiFi access when the Raspberry Pi has booted.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.raspberrypi.org/blog/another-update-raspbian/&quot;&gt;Official documentation&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sat, 13 May 2017 09:00:00 +0000</pubDate>
+        <link>https://blog.amlinger.me/devops/2017/05/13/raspberrypi-wifi-setup.html</link>
+        <guid isPermaLink="true">https://blog.amlinger.me/devops/2017/05/13/raspberrypi-wifi-setup.html</guid>
+        
+        
+        <category>DevOps</category>
+        
+      </item>
+    
+      <item>
+        <title>Automating Jekyll builds</title>
+        <description>&lt;p&gt;I like automating things. That lets me do less work, and allows for less errors to slip through, and being a pretty clumsy person when when it comes to doing manual steps, such as building this site.&lt;/p&gt;
+
+&lt;p&gt;Github Pages is a pretty sweet place to deploy small, static websites. Unfortunately, it is not possible to use a asset pipeline, use plugins or otherwise make any changes to vanilla Jekyll and GitHub to build it for you.&lt;/p&gt;
+
+&lt;p&gt;Initially, I was building and deploying the site manually to the &lt;code&gt;master&lt;/code&gt; branch of the repository, so that GitHub could use that as a website, while keeping the unprocessed project such as CSS and unprocessed Markdown files in the &lt;code&gt;source&lt;/code&gt; branch. However, this was error prone, and I had a hard time remembering the steps between each deployment, as my posts are fairly sparse.&lt;/p&gt;
+
+&lt;h3 id=&quot;continuous-integration-to-the-rescue&quot;&gt;Continuous Integration to the rescue!&lt;/h3&gt;
+&lt;p&gt;Travis and their continuous integration engine, which is free for open source projects, now handles my deployments. Each push to the source branch triggers a build where Travis spins up a virtual machine, installs dependencies and pulls the code.&lt;/p&gt;
+
+&lt;p&gt;This is the &lt;code&gt;.travis.yml&lt;/code&gt; file used for running the build&lt;/p&gt;
+&lt;noscript&gt;&lt;pre&gt;language: ruby
+rvm:
+  - 2.2.2
+script:
+  - bundle install
+  - JEKYLL_ENV=production bundle exec jekyll build
+after_success:
+  - git clone https://$GITHUB_REPO
+  - cd $(basename ${GITHUB_REPO%.git})
+  - git config --global user.name &amp;quot;Travis CI&amp;quot;
+  - git config --global user.email ${AUTHOR_EMAIL}
+  - rsync -az --delete --exclude &amp;#39;.git*&amp;#39; ../_site/ .
+  - touch .nojekyll
+  - git add -A .
+  - git commit -m &amp;quot;Generated Jekyll site by Travis CI - ${TRAVIS_BUILD_NUMBER}&amp;quot;
+  - git push --force &amp;quot;https://${DEPLOY_KEY}@${GITHUB_REPO}&amp;quot; HEAD:${REPO_TARGET_BRANCH}
+branches:
+  only:
+    - source
+env:
+  global:
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+    - GITHUB_REPO: github.com/amlinger/amlinger.github.io.git
+    - REPO_TARGET_BRANCH: master
+    - AUTHOR_EMAIL: anton.amlinger@gmail.com
+    - secure: &amp;lt;secure&amp;gt;&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/amlinger/5bc4783b641bdd4558f416f1e65efd9d.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;The idea is that after a successful build, the &lt;code&gt;master&lt;/code&gt; branch of the project will be cloned, and Git will be configured. The files in the cloned project will be removed upon syncing files from the build directory &lt;code&gt;_site&lt;/code&gt; into the repository’s root. Lastly, a commit is added to the build, and the site is deployed by pushing to the &lt;code&gt;master&lt;/code&gt; branch.&lt;/p&gt;
+
+&lt;h3 id=&quot;improvements-to-be-done&quot;&gt;Improvements to be done&lt;/h3&gt;
+&lt;p&gt;The push currently uses the parent Git directory’s remotes and history, so pushing with the &lt;code&gt;--hard&lt;/code&gt; flag set will currently overwrite the deploy sites history. This could easily be improved by using another, non-nested directory for building the project.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 28 Apr 2017 09:00:00 +0000</pubDate>
+        <link>https://blog.amlinger.me/jekyll/2017/04/28/automating-jekyll-builds.html</link>
+        <guid isPermaLink="true">https://blog.amlinger.me/jekyll/2017/04/28/automating-jekyll-builds.html</guid>
+        
+        
+        <category>jekyll</category>
+        
+      </item>
+    
+      <item>
+        <title>Adding Namecheap email address via AWS hosted Zone</title>
+        <description>&lt;p&gt;I like smart email addresses. Since my last name starts with an ‘a’, I figured I’d register the nifty personal email address &lt;code&gt;anton@mlinger.com&lt;/code&gt; to be like other cool developers. This is a write-up on how to reproduce this for other domains as well.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.namecheap.com/&quot;&gt;Namecheap&lt;/a&gt; is usually my goto place for domains. They got a pretty user-friendly interface as well as a nice and fast customer support. So I naturally grabbed the domain mlinger.com from there.&lt;/p&gt;
+
+&lt;h3 id=&quot;setting-up-a-hosted-zone&quot;&gt;Setting up a Hosted Zone&lt;/h3&gt;
+
+&lt;p&gt;As I manage most of my domains through AWS, I decided to setup the domain in Route 53 as a hosted zone. This can be done by logging into your AWS account, going to &lt;code&gt;Route 53&lt;/code&gt; &amp;gt; &lt;code&gt;Hosted Zones&lt;/code&gt; &amp;gt; &lt;code&gt;Create Hosted Zone&lt;/code&gt;, enter the domain that you own, any comment about the hosted zone, and leave the type as is to be able to access it from the public Internet. &lt;em&gt;&lt;a href=&quot;http://techgenix.com/namecheap-aws-ec2-linux/&quot;&gt;This TechGenix&lt;/a&gt; page provides a more detailed description of the way to go about this.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;You’ll notice that AWS already has setup Name Server records for this hosted zone (I’ve always had trouble remembering what all DNS record names do, so at the end I’ve put a table explaining the records in this post). We’ll need to copy the value of these to Namecheap, to let it know that the domain should be handled by AWS name servers. The value of the &lt;code&gt;NS&lt;/code&gt; record should look something like the following, but will most likely be different for each hosted zone:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ns-888.awsdns-47.net.
+ns-1506.awsdns-60.org.
+ns-472.awsdns-59.com.
+ns-1771.awsdns-29.co.uk.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note these values, and head over to Namecheap. Go to &lt;code&gt;Domain List&lt;/code&gt; &amp;gt; &lt;code&gt;mlinger.com&lt;/code&gt; and have a look under &lt;code&gt;Nameservers&lt;/code&gt;. Change the value to &lt;code&gt;Custom DNS&lt;/code&gt;, and add the values found in AWS on individual lines.&lt;/p&gt;
+
+&lt;h3 id=&quot;managing-an-email-inbox&quot;&gt;Managing an email inbox&lt;/h3&gt;
+
+&lt;p&gt;To be able to send and receive emails, an email server needs to get the emails. There are a couple of alternatives to achieving this, one being hosting your own server, which I didn’t go for initially for simplicity. I eventually want to handle my emails through Gmail, and given that, it seems like there are two options to go for:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Signing up for Gsuite to register a custom domain.&lt;/li&gt;
+  &lt;li&gt;Buying Privateemail from Namecheap and handle that through Gmail.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The former option has been discouraged from, since that is more of an option for companies and not private persons, and will disable certain features from your Google apps. This being the case, I went for the latter option.&lt;/p&gt;
+
+&lt;h3 id=&quot;sending-emails-to-namecheap-privateemail&quot;&gt;Sending emails to Namecheap Privateemail&lt;/h3&gt;
+
+&lt;p&gt;Privateemail can be set up through Namecheap for the domain in question, after which we need to make sure that email reaches the server by setting up records in the hosted zone pointing to the email server on Namecheap. According to &lt;a href=&quot;https://www.namecheap.com/support/knowledgebase/article.aspx/1340/2176/namecheap-private-email-records-for-domains-with-thirdparty-dns&quot;&gt;Namecheaps guide&lt;/a&gt;, the following records need to be set up.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Name&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Type&lt;/th&gt;
+      &lt;th&gt;Value&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;Leave blank&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;code&gt;MX&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code&gt;10 mx2.privateemail.com&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;Leave blank&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;code&gt;MX&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code&gt;10 mx1.privateemail.com&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;em&gt;Leave blank&lt;/em&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;code&gt;TXT&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code&gt;v=spf1 include:spf.privateemail.com ~all&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;mail&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;code&gt;CNAME&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code&gt;privateemail.com&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;autodiscover&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;code&gt;CNAME&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code&gt;privateemail.com&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;autoconfig&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;code&gt;CNAME&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code&gt;privateemail.com&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;_autodiscover._tcp&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;code&gt;CNAME&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code&gt;0 0 443 privateemail.com&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The &lt;code&gt;MX&lt;/code&gt; records will point out where the mail server is located, and the other ones should be optional, but are encouraged.&lt;/p&gt;
+
+&lt;p&gt;Allowing up to 1 hour for the records to take effect might be needed, before moving on to the next step&lt;/p&gt;
+
+&lt;h3 id=&quot;handle-email-from-gmail&quot;&gt;Handle email from Gmail&lt;/h3&gt;
+
+&lt;p&gt;Last step is to let Gmail manage the email settings. This is thoroughly explained step by step &lt;a href=&quot;https://www.namecheap.com/support/knowledgebase/article.aspx/9188/2175/google-mail-fetcher-setup-for-namecheap-private-email&quot;&gt;here&lt;/a&gt;, but here is a quick walkthrough. In your Gmail account, and go to &lt;code&gt;Settings&lt;/code&gt; &amp;gt; &lt;code&gt;Accounts and Import&lt;/code&gt; &amp;gt;  &lt;code&gt;Add a mail account&lt;/code&gt;. In the popup, step by step:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Enter your custom email address&lt;/li&gt;
+  &lt;li&gt;Your Privateemail username/password, &lt;code&gt;mail.privateemail.com&lt;/code&gt; for POP Server and use port 995&lt;/li&gt;
+  &lt;li&gt;Tick that you want to be able to send email as well&lt;/li&gt;
+  &lt;li&gt;Add the same custom email address&lt;/li&gt;
+  &lt;li&gt;Use &lt;code&gt;mail.privateemail.com&lt;/code&gt; as SMTP server, your username/password, port 465, and use SSL.&lt;/li&gt;
+  &lt;li&gt;Fill in the verification code that you should have received from Gmail in the Privateemail account.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;After this step, Gmail should be able to handle sending/receiving emails from a custom domain!&lt;/p&gt;
+
+&lt;h3 id=&quot;dns-records-and-what-they-are-used-for&quot;&gt;DNS records and what they are used for.&lt;/h3&gt;
+
+&lt;p&gt;This is a brief explanation of the records that are used in this post.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Record&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Value&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;What it does&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;code&gt;NS&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Name Server&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;The server to use to get info about hosts in this zone&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;code&gt;MX&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Mail eXchange&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Points to the location for a server handling email&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;code&gt;TXT&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;TeXT&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Arbitrary text record for human readable text&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;code&gt;CNAME&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Canonical NAME&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;An alias for another domain name&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;code&gt;SRV&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;SeRVice&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Defines host/port for the specified service&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+        <pubDate>Sun, 23 Apr 2017 09:00:00 +0000</pubDate>
+        <link>https://blog.amlinger.me/devops/2017/04/23/adding-namecheap-email-address-via-aws-hosted-zone.html</link>
+        <guid isPermaLink="true">https://blog.amlinger.me/devops/2017/04/23/adding-namecheap-email-address-via-aws-hosted-zone.html</guid>
+        
+        
+        <category>DevOps</category>
+        
+      </item>
+    
+      <item>
+        <title>Adding Gravatar in Jekyll</title>
+        <description>&lt;p&gt;I’m a big fan of &lt;a href=&quot;https://gravatar.com/&quot;&gt;Gravatar&lt;/a&gt;. I like the idea of being able to keep track of my profile photos in a central location, instead of having to change them at each service, remembering where I’ve stored the photos locally, and so on.&lt;/p&gt;
+
+&lt;p&gt;Another advantage of the Gravatar service is the possibility to request profile images of different sizes, based on what is needed in the context. This is useful especially when you only need a thumbnail.&lt;/p&gt;
+
+&lt;p&gt;To accommodate for this, and to learn a bit more about the way Jekylls plugin system works, I wrote a small tag rendering the URL to a profile image given an email, and a size of the desired image. I went with the following tag interface for including Gravatars:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;{% to_gravatar email: anton.amlinger@gmail.com, size: 50 %}&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The resulting script takes an email and a size in pixels, and returns a URL to the corresponding image. Gravatars API is based on an md5 hexadecimal representation of the email of the user, making the implementation rather straight forward:&lt;/p&gt;
+
+&lt;noscript&gt;&lt;pre&gt;require &amp;#39;digest/md5&amp;#39;
+
+module Jekyll
+  class RenderGravatar &amp;lt; Liquid::Tag
+
+    def initialize(tag_name, text, tokens)
+      super
+      @attributes = text.scan(::Liquid::TagAttributes).to_h
+    end
+
+    def render(context)
+      hash = Digest::MD5.hexdigest(@attributes[&amp;#39;email&amp;#39;].downcase.strip)
+      size = @attributes[&amp;#39;size&amp;#39;]
+      return &amp;quot;//gravatar.com/avatar/#{hash}?s=#{size}&amp;quot;
+    end
+  end
+end
+
+Liquid::Template.register_tag(&amp;#39;to_gravatar&amp;#39;, Jekyll::RenderGravatar)&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/amlinger/21ac760f9ce244ff7d5a75742a47bc18.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;&lt;em&gt;The demand for yet another plugin for adding Gravatar to Jekyll (there already are a few) does not seem to be very large to me, which is why this is kept in a Gist and not as an actual Gem.&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sun, 25 Dec 2016 11:28:14 +0000</pubDate>
+        <link>https://blog.amlinger.me/jekyll/2016/12/25/adding-gravatar-in-jekyll.html</link>
+        <guid isPermaLink="true">https://blog.amlinger.me/jekyll/2016/12/25/adding-gravatar-in-jekyll.html</guid>
+        
+        
+        <category>jekyll</category>
+        
+      </item>
+    
+      <item>
+        <title>Jekyll, and my First Post</title>
+        <description>&lt;p&gt;This is my first post in this blog, and I thought that it would be suiting to write a bit about Jekyll, the engine which this blog runs upon, as well as some other design decisions regarding this blog. Jekyll was chosen to fulfill two requirements of mine when it came to using a blog engine;&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Somewhat transparent, meaning that the source code could be found and read.&lt;/li&gt;
+  &lt;li&gt;Not use a database, since version maintaining your posts and seeing what has been written is already done by VCS:s such as Git, that I intended to use anyway.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Jekyll is a static blog engine, that compiles your blog posts written in Markdown to static HTML, which can be served conveniently on GitHub pages.&lt;/p&gt;
+
+&lt;p&gt;To be able to use a custom domain, instead of &lt;a href=&quot;https://amlinger.github.io&quot;&gt;amlinger.github.io&lt;/a&gt; as is the default on GitHub pages, adding a &lt;a href=&quot;https://github.com/amlinger/amlinger.github.io/blob/master/CNAME&quot;&gt;CNAME&lt;/a&gt; file does the trick. The only problem is that GitHub has no way of supporting SSL certificates, leaving you without HTTPS. This might not do too much for a static blog page which source code still is open source on GitHub, but it is bad for SEO. I solved this by signing up for a CloudFare account, where they are kind enough to provide free SSL certificates, and thus solving the HTTPS problem.&lt;/p&gt;
+
+&lt;p&gt;This will have to do for a first post of a blog thats still under heavy development. Stay tuned for more updates!&lt;/p&gt;
+</description>
+        <pubDate>Mon, 23 May 2016 16:36:14 +0000</pubDate>
+        <link>https://blog.amlinger.me/jekyll/2016/05/23/jekyll-and-my-first-post.html</link>
+        <guid isPermaLink="true">https://blog.amlinger.me/jekyll/2016/05/23/jekyll-and-my-first-post.html</guid>
+        
+        
+        <category>jekyll</category>
+        
+      </item>
+    
   </channel>
 </rss>

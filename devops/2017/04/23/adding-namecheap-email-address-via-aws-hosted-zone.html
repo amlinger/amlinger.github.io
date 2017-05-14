@@ -5,15 +5,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Anton Amlinger</title>
+  <title>Adding Namecheap email address via AWS hosted Zone</title>
   <meta name="description"
-        content="Anton Amlinger
-">
+        content="I like smart email addresses. Since my last name starts with an ‘a’, I figured I’d register the nifty personal email address anton@mlinger.com to be like oth...">
 
   <link type="text/css" rel="stylesheet" href="/assets/main-4001e27f649a4835ccf187acfeccdd1e42b20455e479d97c16d55121786278a5.css">
 
   <link rel="canonical"
-        href="https://blog.amlinger.me/">
+        href="https://blog.amlinger.me/devops/2017/04/23/adding-namecheap-email-address-via-aws-hosted-zone.html">
   <link rel="alternate"
         title="Anton Amlinger"
         type="application/rss+xml"
@@ -115,136 +114,25 @@
 </aside>
 
     <div class="page-content">
-      <div class="home">
-  <ul class="post-list">
-    
-      <li>
-        <span class="post-meta">May 14, 2017</span>
-        <h2>
-          <a class="post-link"
-             href="/homeautomation/2017/05/14/who-is-home-on-asus-router.html">
-            Who is Home on an Asus Router
-          </a>
-        </h2>
-        <div class="post-content">
-          <p>I like knowing whats on my local network. Sharing a house with a bunch of roommates, the idea was that knowing who and what is connected to the WiFi/Ethernet on the router could help automating this, and building cool services on top of.</p>
+      <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
-<p>The first approach I took was using a NodeJs server (because everything needs to be written in JavaScript these days) using <a href="https://nmap.org/">Nmap</a> to scan the network for IP addresses, together with (ARP)[https://en.wikipedia.org/wiki/Address_Resolution_Protocol] to resolve MAC addresses from the IP’s that Nmap provided. Running this server on a RaspberryPi was pretty unreliable, finding all hostnames, as well as resolving the IP addresses was shaky at best.</p>
+  <header class="post-header">
+    <h1 class="post-title"
+        itemprop="name headline">
+      Adding Namecheap email address via AWS hosted Zone
+    </h1>
+    <p class="post-meta">
+      <time datetime="2017-04-23T09:00:00+00:00"
+            itemprop="datePublished">
+        Apr 23, 2017
+      </time>
+      
+    </p>
+  </header>
 
-<h3 id="finding-a-way-in">Finding a Way In</h3>
-
-<p>I came upon this idea back in February, and did not pursue it any further for reasons stated above, and didn’t think much about it until a few weeks ago, when I stumbled upon this article from <a href="http://mycyberuniverse.com/linux/full-controling-the-asus-router-via-command-line.html">My Cyber Universe</a>, which describes how to gain Telnet access to your Asus Router. Given that I’m the owner of an Asus RT-N66U, I proceeded to automating the task of looking up which devices are present in the Routers, much more reliable, ARP table, and presenting that on the local network via (of course) a NodeJs server.</p>
-
-<h3 id="solution">Solution</h3>
-
-<p>The work the server does is minimal. On a given interval, a script on the server Telnets into the Asus router, and reads the ARP table file. This is then parsed and stored locally. For each record without a name, <code>nslookup</code> is done to resolve the hostname via the DNS server running on the router.</p>
-
-<p>Find the project here: https://github.com/amlinger/who-is-home</p>
-
-<h4 id="points-of-improvement">Points of improvement</h4>
-
-<p>The small project could benefit from a couple of small improvements, that is still upcoming:</p>
-<ol>
-  <li>Invalidate the local hostname cache. Even though the Hostname is unlikely to change for any of the devices on the network, restarting the server to get the new Hostname is cumbersome.</li>
-  <li>Lock management. The current solution is a concurrency-hazard, and reading and writing to the same mapping at the same time is bound to happen at some point. This could be addressed by adding mutex locks.</li>
-</ol>
-
-        </div>
-      </li>
-    
-      <li>
-        <span class="post-meta">May 13, 2017</span>
-        <h2>
-          <a class="post-link"
-             href="/devops/2017/05/13/raspberrypi-wifi-setup.html">
-            A Note on RaspberryPi WiFi setup
-          </a>
-        </h2>
-        <div class="post-content">
-          <p>I like accessing my RaspberryPi’s over SSH. This feature have been disabled for fresh installs of Raspbian, and for good reasons as well, to not provide a security breach into the Pi as many did without changing the default username and password.</p>
-
-<p>It can also be a bit cumbersome to access your newly flashed Pi, especially if the plan is to run it headless without a keyboard/monitor attached.</p>
-
-<h3 id="ssh-access">SSH access</h3>
-
-<p>After burning your SD card, and reading it as a mounted unit, the boot partition is accessible and writeable. To get SSH access straight away, add a file called <code>ssh</code> in the <code>boot</code> partition (most likely displayed as the root of your SD card).</p>
-
-<p><a href="https://www.raspberrypi.org/documentation/remote-access/ssh/">Official documentation</a></p>
-
-<h3 id="wifi-access">WiFi Access</h3>
-
-<p>In the same manner as with the SSH file, a <code>wpa_supplicant.conf</code> file can be added to the <code>boot</code> partition, which will then be copied into <code>/etc/wpa_supplicant/wpa_supplicant.conf</code> to provide WiFi access when the Raspberry Pi has booted.</p>
-
-<p><a href="https://www.raspberrypi.org/blog/another-update-raspbian/">Official documentation</a></p>
-
-        </div>
-      </li>
-    
-      <li>
-        <span class="post-meta">Apr 28, 2017</span>
-        <h2>
-          <a class="post-link"
-             href="/jekyll/2017/04/28/automating-jekyll-builds.html">
-            Automating Jekyll builds
-          </a>
-        </h2>
-        <div class="post-content">
-          <p>I like automating things. That lets me do less work, and allows for less errors to slip through, and being a pretty clumsy person when when it comes to doing manual steps, such as building this site.</p>
-
-<p>Github Pages is a pretty sweet place to deploy small, static websites. Unfortunately, it is not possible to use a asset pipeline, use plugins or otherwise make any changes to vanilla Jekyll and GitHub to build it for you.</p>
-
-<p>Initially, I was building and deploying the site manually to the <code>master</code> branch of the repository, so that GitHub could use that as a website, while keeping the unprocessed project such as CSS and unprocessed Markdown files in the <code>source</code> branch. However, this was error prone, and I had a hard time remembering the steps between each deployment, as my posts are fairly sparse.</p>
-
-<h3 id="continuous-integration-to-the-rescue">Continuous Integration to the rescue!</h3>
-<p>Travis and their continuous integration engine, which is free for open source projects, now handles my deployments. Each push to the source branch triggers a build where Travis spins up a virtual machine, installs dependencies and pulls the code.</p>
-
-<p>This is the <code>.travis.yml</code> file used for running the build</p>
-<noscript><pre>language: ruby
-rvm:
-  - 2.2.2
-script:
-  - bundle install
-  - JEKYLL_ENV=production bundle exec jekyll build
-after_success:
-  - git clone https://$GITHUB_REPO
-  - cd $(basename ${GITHUB_REPO%.git})
-  - git config --global user.name &quot;Travis CI&quot;
-  - git config --global user.email ${AUTHOR_EMAIL}
-  - rsync -az --delete --exclude &#39;.git*&#39; ../_site/ .
-  - touch .nojekyll
-  - git add -A .
-  - git commit -m &quot;Generated Jekyll site by Travis CI - ${TRAVIS_BUILD_NUMBER}&quot;
-  - git push --force &quot;https://${DEPLOY_KEY}@${GITHUB_REPO}&quot; HEAD:${REPO_TARGET_BRANCH}
-branches:
-  only:
-    - source
-env:
-  global:
-    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-    - GITHUB_REPO: github.com/amlinger/amlinger.github.io.git
-    - REPO_TARGET_BRANCH: master
-    - AUTHOR_EMAIL: anton.amlinger@gmail.com
-    - secure: &lt;secure&gt;</pre></noscript>
-<script src="https://gist.github.com/amlinger/5bc4783b641bdd4558f416f1e65efd9d.js"> </script>
-
-<p>The idea is that after a successful build, the <code>master</code> branch of the project will be cloned, and Git will be configured. The files in the cloned project will be removed upon syncing files from the build directory <code>_site</code> into the repository’s root. Lastly, a commit is added to the build, and the site is deployed by pushing to the <code>master</code> branch.</p>
-
-<h3 id="improvements-to-be-done">Improvements to be done</h3>
-<p>The push currently uses the parent Git directory’s remotes and history, so pushing with the <code>--hard</code> flag set will currently overwrite the deploy sites history. This could easily be improved by using another, non-nested directory for building the project.</p>
-
-        </div>
-      </li>
-    
-      <li>
-        <span class="post-meta">Apr 23, 2017</span>
-        <h2>
-          <a class="post-link"
-             href="/devops/2017/04/23/adding-namecheap-email-address-via-aws-hosted-zone.html">
-            Adding Namecheap email address via AWS hosted Zone
-          </a>
-        </h2>
-        <div class="post-content">
-          <p>I like smart email addresses. Since my last name starts with an ‘a’, I figured I’d register the nifty personal email address <code>anton@mlinger.com</code> to be like other cool developers. This is a write-up on how to reproduce this for other domains as well.</p>
+  <div class="post-content"
+       itemprop="articleBody">
+    <p>I like smart email addresses. Since my last name starts with an ‘a’, I figured I’d register the nifty personal email address <code>anton@mlinger.com</code> to be like other cool developers. This is a write-up on how to reproduce this for other domains as well.</p>
 
 <p><a href="https://www.namecheap.com/">Namecheap</a> is usually my goto place for domains. They got a pretty user-friendly interface as well as a nice and fast customer support. So I naturally grabbed the domain mlinger.com from there.</p>
 
@@ -381,80 +269,9 @@ ns-1771.awsdns-29.co.uk.
   </tbody>
 </table>
 
-        </div>
-      </li>
-    
-      <li>
-        <span class="post-meta">Dec 25, 2016</span>
-        <h2>
-          <a class="post-link"
-             href="/jekyll/2016/12/25/adding-gravatar-in-jekyll.html">
-            Adding Gravatar in Jekyll
-          </a>
-        </h2>
-        <div class="post-content">
-          <p>I’m a big fan of <a href="https://gravatar.com/">Gravatar</a>. I like the idea of being able to keep track of my profile photos in a central location, instead of having to change them at each service, remembering where I’ve stored the photos locally, and so on.</p>
+  </div>
 
-<p>Another advantage of the Gravatar service is the possibility to request profile images of different sizes, based on what is needed in the context. This is useful especially when you only need a thumbnail.</p>
-
-<p>To accommodate for this, and to learn a bit more about the way Jekylls plugin system works, I wrote a small tag rendering the URL to a profile image given an email, and a size of the desired image. I went with the following tag interface for including Gravatars:</p>
-
-<p><code>{% to_gravatar email: anton.amlinger@gmail.com, size: 50 %}</code></p>
-
-<p>The resulting script takes an email and a size in pixels, and returns a URL to the corresponding image. Gravatars API is based on an md5 hexadecimal representation of the email of the user, making the implementation rather straight forward:</p>
-
-<noscript><pre>require &#39;digest/md5&#39;
-
-module Jekyll
-  class RenderGravatar &lt; Liquid::Tag
-
-    def initialize(tag_name, text, tokens)
-      super
-      @attributes = text.scan(::Liquid::TagAttributes).to_h
-    end
-
-    def render(context)
-      hash = Digest::MD5.hexdigest(@attributes[&#39;email&#39;].downcase.strip)
-      size = @attributes[&#39;size&#39;]
-      return &quot;//gravatar.com/avatar/#{hash}?s=#{size}&quot;
-    end
-  end
-end
-
-Liquid::Template.register_tag(&#39;to_gravatar&#39;, Jekyll::RenderGravatar)</pre></noscript>
-<script src="https://gist.github.com/amlinger/21ac760f9ce244ff7d5a75742a47bc18.js"> </script>
-
-<p><em>The demand for yet another plugin for adding Gravatar to Jekyll (there already are a few) does not seem to be very large to me, which is why this is kept in a Gist and not as an actual Gem.</em></p>
-
-        </div>
-      </li>
-    
-      <li>
-        <span class="post-meta">May 23, 2016</span>
-        <h2>
-          <a class="post-link"
-             href="/jekyll/2016/05/23/jekyll-and-my-first-post.html">
-            Jekyll, and my First Post
-          </a>
-        </h2>
-        <div class="post-content">
-          <p>This is my first post in this blog, and I thought that it would be suiting to write a bit about Jekyll, the engine which this blog runs upon, as well as some other design decisions regarding this blog. Jekyll was chosen to fulfill two requirements of mine when it came to using a blog engine;</p>
-<ol>
-  <li>Somewhat transparent, meaning that the source code could be found and read.</li>
-  <li>Not use a database, since version maintaining your posts and seeing what has been written is already done by VCS:s such as Git, that I intended to use anyway.</li>
-</ol>
-
-<p>Jekyll is a static blog engine, that compiles your blog posts written in Markdown to static HTML, which can be served conveniently on GitHub pages.</p>
-
-<p>To be able to use a custom domain, instead of <a href="https://amlinger.github.io">amlinger.github.io</a> as is the default on GitHub pages, adding a <a href="https://github.com/amlinger/amlinger.github.io/blob/master/CNAME">CNAME</a> file does the trick. The only problem is that GitHub has no way of supporting SSL certificates, leaving you without HTTPS. This might not do too much for a static blog page which source code still is open source on GitHub, but it is bad for SEO. I solved this by signing up for a CloudFare account, where they are kind enough to provide free SSL certificates, and thus solving the HTTPS problem.</p>
-
-<p>This will have to do for a first post of a blog thats still under heavy development. Stay tuned for more updates!</p>
-
-        </div>
-      </li>
-    
-  </ul>
-</div>
+</article>
 
     </div>
   </body>
